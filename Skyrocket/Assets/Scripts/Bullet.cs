@@ -23,6 +23,7 @@ public class Bullet : MonoBehaviour
     void Explode()
     {
         // 这里可以实现爆炸效果，比如通过动画或粒子效果
+
         // 对爆炸范围内的所有对象施加力
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, blastRadius);
         foreach (Collider2D nearbyObject in colliders)
