@@ -36,6 +36,7 @@ public class Bullet : MonoBehaviour
                 rb.velocity = directionToPlayer * explosionSpeed;
             }
         }
+
         Destroy(gameObject); // Ïú»Ù×Óµ¯
     }
 }
