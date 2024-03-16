@@ -39,6 +39,6 @@ public class BetterFall : MonoBehaviour
                 _rb.gravityScale = _gravityPlus;
             }
         }
-        Debug.Log(_rb.velocity.y);
+        //Debug.Log(_rb.velocity.y);
     }
 }

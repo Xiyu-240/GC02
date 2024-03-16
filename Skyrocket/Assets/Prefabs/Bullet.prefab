@@ -140,7 +140,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delay: 3
   blastRadius: 5
-  explosionSpeed: 20
+  explosionSpeed: 40
   particleTime: 1
 --- !u!96 &-475512808223243039
 TrailRenderer:

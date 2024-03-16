@@ -58,15 +58,17 @@ public class Player : MonoBehaviour
     void Fire()
     {
         float speed = Mathf.Lerp(minSpeed, maxSpeed, chargeTime / maxChargeTime);
-        Vector2 shootingDirection = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePos.z = 0;
+        Vector2 shootingDirection = (mousePos - transform.position).normalized;
+        Debug.Log("1:" + shootingDirection.magnitude + "and" + speed);
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
-
         // 直接设置子弹速度
         bullet.GetComponent<Rigidbody2D>().velocity = shootingDirection * speed;
-
+        Debug.Log("2:" +shootingDirection + "and" + speed);
         // 给玩家添加反向速度
         GetComponent<Rigidbody2D>().velocity = -shootingDirection * speed; // 可调整反向速度的大小
-        Debug.Log(shootingDirection * speed);
+        Debug.Log("3:" +shootingDirection +"and"+speed);
         if (currentBullets > 0)
         {
             // 发射子弹的代码...
