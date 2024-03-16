@@ -5,6 +5,7 @@ public class Bullet : MonoBehaviour
     public float delay = 3f;
     public float blastRadius = 5f;
     public float explosionSpeed = 50f;
+    public float particleTime = 1f;
 
     void Start()
     {
@@ -37,6 +38,14 @@ public class Bullet : MonoBehaviour
             }
         }
 
-        Destroy(gameObject); // 销毁子弹
+        gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        gameObject.GetComponentInChildren<ParticleSystem>().Play();
+
+        Invoke("DestroyBullet", particleTime);//销毁子弹
+    }
+
+    void DestroyBullet()
+    {
+        Destroy(gameObject);
     }
 }
