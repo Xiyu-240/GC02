@@ -9,6 +9,7 @@ public class DeformOnCollision : MonoBehaviour
     public float minCollisionSpeed = 5f;
     public Vector3 deformationScale = new Vector3(1.5f, 1f, 1f);
 
+    public ParticleSystem dustParticle;//ÂäµØÑÌ
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -27,6 +28,7 @@ public class DeformOnCollision : MonoBehaviour
             {
                 // ÐÎ±ä
                 StartCoroutine(DeformCoroutine());
+                dustParticle.Play();
             }
         }
     }

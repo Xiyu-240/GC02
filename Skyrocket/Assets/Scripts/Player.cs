@@ -18,6 +18,9 @@ public class Player : MonoBehaviour
     public float reloadTime = 2f; // 装填时间
     private bool isReloading = false;
 
+    public bool fireShake = false;
+    public ParticleSystem fireParticle;
+
     private void Start()
     {
         currentBullets = maxBullets;
@@ -57,6 +60,9 @@ public class Player : MonoBehaviour
     }
     void Fire()
     {
+        fireParticle.Play();//开火烟尘
+        fireShake = true;//开火震动
+
         float speed = Mathf.Lerp(minSpeed, maxSpeed, chargeTime / maxChargeTime);
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0;

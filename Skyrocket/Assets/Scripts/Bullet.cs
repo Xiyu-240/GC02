@@ -2,13 +2,18 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    public CameraShake cameraShake;
+
     public float delay = 3f;
     public float blastRadius = 5f;
     public float explosionSpeed = 50f;
     public float particleTime = 1f;
 
+    public bool boomShake = false;
+
     void Start()
     {
+        cameraShake = GameObject.Find("CM vcam1").GetComponent<CameraShake>();//获取组件
         Invoke("Explode", delay);
     }
 
@@ -23,7 +28,7 @@ public class Bullet : MonoBehaviour
 
     void Explode()
     {
-        // 这里可以实现爆炸效果，比如通过动画或粒子效果
+        cameraShake.BoomShake();//调用震动函数
 
         // 对爆炸范围内的所有对象施加力
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, blastRadius);
