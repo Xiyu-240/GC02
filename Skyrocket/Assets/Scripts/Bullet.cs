@@ -39,7 +39,7 @@ public class Bullet : MonoBehaviour
             {
                 Vector2 directionToPlayer = (nearbyObject.transform.position - transform.position).normalized;
                 // 直接设置受爆炸影响物体的速度
-                rb.velocity = directionToPlayer * explosionSpeed;
+                rb.velocity += directionToPlayer * explosionSpeed;
             }
         }
 

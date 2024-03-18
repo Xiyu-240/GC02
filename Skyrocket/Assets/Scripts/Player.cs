@@ -5,10 +5,16 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public GameObject bulletPrefab;
+
+    public GameObject rocket0;
+    public GameObject rocket1;
     public Transform firePoint;
     public float minSpeed = 10f;//最小后坐
     public float maxSpeed = 30f;//最大后坐
     public float maxChargeTime = 2f;//最大蓄力时间
+
+    public SpriteRenderer playerSprite;
+    public SpriteRenderer gunSprite;
 
     private float chargeTime;
     private bool isCharging = false;
@@ -27,6 +33,23 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
+        if (currentBullets == 2)
+        {
+            rocket0.SetActive(true);
+            rocket1.SetActive(true);
+        }
+        if (currentBullets == 1)
+        {
+            rocket0.SetActive(false);
+            rocket1.SetActive(true);
+        }
+        if (currentBullets == 0)
+        {
+            rocket0.SetActive(false);
+            rocket1.SetActive(false);
+        }
+
+
         if (!isReloading)
         {
             if (Input.GetMouseButtonDown(0)) // 鼠标左键按下
@@ -49,6 +72,25 @@ public class Player : MonoBehaviour
             {
                 StartCoroutine(Reload());
             }
+        }
+
+        // 将鼠标的屏幕坐标转换为世界坐标
+        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        // 因为是2D游戏，所以设置z坐标为0
+        mouseWorldPosition.z = 0;
+
+        // 检查鼠标位置是否在物体的左边
+        if (mouseWorldPosition.x < transform.position.x)
+        {
+            // 如果在左边，翻转Sprite（沿着x轴）
+            playerSprite.flipX = false;
+            gunSprite.flipY = true;
+        }
+        else
+        {
+            // 如果在右边或正上方，确保Sprite正常朝向（不翻转）
+            playerSprite.flipX = true;
+            gunSprite.flipY = false;
         }
     }
     IEnumerator Reload()
@@ -73,7 +115,7 @@ public class Player : MonoBehaviour
         bullet.GetComponent<Rigidbody2D>().velocity = shootingDirection * speed;
         Debug.Log("2:" +shootingDirection + "and" + speed);
         // 给玩家添加反向速度
-        GetComponent<Rigidbody2D>().velocity = -shootingDirection * speed; // 可调整反向速度的大小
+        GetComponent<Rigidbody2D>().velocity -= shootingDirection * speed; // 可调整反向速度的大小
         Debug.Log("3:" +shootingDirection +"and"+speed);
         if (currentBullets > 0)
         {

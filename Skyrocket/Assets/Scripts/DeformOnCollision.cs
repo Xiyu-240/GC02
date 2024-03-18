@@ -10,6 +10,8 @@ public class DeformOnCollision : MonoBehaviour
     public Vector3 deformationScale = new Vector3(1.5f, 1f, 1f);
 
     public ParticleSystem dustParticle;//落地烟
+
+    public GameObject playerSprite;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -39,13 +41,13 @@ public class DeformOnCollision : MonoBehaviour
         canDeform = false;
 
         // 形变
-        transform.localScale = deformationScale;
+        playerSprite.transform.localScale = deformationScale;
 
         // 等待一段时间后恢复原状
         yield return new WaitForSeconds(0.1f);
 
         // 恢复原状
-        transform.localScale = Vector3.one;
+        playerSprite.transform.localScale = Vector3.one;
 
         // 重新启用碰撞
         yield return new WaitForSeconds(0.1f);
