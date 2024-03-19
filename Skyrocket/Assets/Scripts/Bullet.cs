@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -45,6 +46,7 @@ public class Bullet : MonoBehaviour
 
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
         gameObject.GetComponentInChildren<ParticleSystem>().Play();
+        gameObject.GetComponent<AudioSource>().Play();
 
         Invoke("DestroyBullet", particleTime);//Ïú»Ù×Óµ¯
     }

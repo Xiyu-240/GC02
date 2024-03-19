@@ -1,13 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
     public GameObject bulletPrefab;
 
-    public GameObject rocket0;
-    public GameObject rocket1;
+    public GameObject bullet;
+    public Sprite sprite0;
+    public Sprite sprite1;
+    public Sprite sprite2;
+
+    public GameObject chargeBar;
     public Transform firePoint;
     public float minSpeed = 10f;//最小后坐
     public float maxSpeed = 30f;//最大后坐
@@ -26,6 +31,8 @@ public class Player : MonoBehaviour
 
     public bool fireShake = false;
     public ParticleSystem fireParticle;
+    public ParticleSystem chargeParticle;
+    public ParticleSystem chargeParticle_;
 
     private void Start()
     {
@@ -35,27 +42,26 @@ public class Player : MonoBehaviour
     {
         if (currentBullets == 2)
         {
-            rocket0.SetActive(true);
-            rocket1.SetActive(true);
+            bullet.GetComponent<Image>().sprite = sprite2;
         }
         if (currentBullets == 1)
         {
-            rocket0.SetActive(false);
-            rocket1.SetActive(true);
+            bullet.GetComponent<Image>().sprite = sprite1;
         }
         if (currentBullets == 0)
         {
-            rocket0.SetActive(false);
-            rocket1.SetActive(false);
+            bullet.GetComponent<Image>().sprite = sprite0;
         }
 
+        chargeBar.GetComponent<Image>().fillAmount = chargeTime / 2;
 
         if (!isReloading)
         {
             if (Input.GetMouseButtonDown(0)) // 鼠标左键按下
             {
+                chargeParticle.Play();
+                chargeParticle_.Play();
                 isCharging = true;
-                chargeTime = 0f; // 开始蓄力
             }
             else if (isCharging && chargeTime < maxChargeTime)
             {
@@ -64,8 +70,11 @@ public class Player : MonoBehaviour
 
             if (Input.GetMouseButtonUp(0) && isCharging) // 鼠标左键释放
             {
+                chargeParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                chargeParticle_.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
                 Fire();
                 isCharging = false;
+                chargeTime = 0f;
             }
 
             if (currentBullets <= 0 && !isReloading)
