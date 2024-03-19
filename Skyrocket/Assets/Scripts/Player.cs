@@ -34,6 +34,8 @@ public class Player : MonoBehaviour
     public ParticleSystem chargeParticle;
     public ParticleSystem chargeParticle_;
 
+    public AudioSource asCharge;
+    public AudioSource asChargeEnd;
     private void Start()
     {
         currentBullets = maxBullets;
@@ -62,6 +64,7 @@ public class Player : MonoBehaviour
                 chargeParticle.Play();
                 chargeParticle_.Play();
                 isCharging = true;
+                asCharge.Play();
             }
             else if (isCharging && chargeTime < maxChargeTime)
             {
@@ -75,6 +78,8 @@ public class Player : MonoBehaviour
                 Fire();
                 isCharging = false;
                 chargeTime = 0f;
+                asCharge.Stop();
+                asChargeEnd.Play();
             }
 
             if (currentBullets <= 0 && !isReloading)

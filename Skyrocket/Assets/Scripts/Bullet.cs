@@ -17,7 +17,21 @@ public class Bullet : MonoBehaviour
         cameraShake = GameObject.Find("CM vcam1").GetComponent<CameraShake>();//获取组件
         Invoke("Explode", delay);
     }
+    void Update()
+    {
+        RotateInMovementDirection();
+    }
 
+    void RotateInMovementDirection()
+    {
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        Vector2 velocity = rb.velocity;
+        if (velocity != Vector2.zero) // 确保速度不为零
+        {
+            float angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg; // 计算角度
+            transform.rotation = Quaternion.Euler(0f, 0f, angle-40f);
+        }
+    }
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Wall")
