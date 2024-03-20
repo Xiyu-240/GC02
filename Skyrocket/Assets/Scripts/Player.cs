@@ -55,7 +55,7 @@ public class Player : MonoBehaviour
             bullet.GetComponent<Image>().sprite = sprite0;
         }
 
-        chargeBar.GetComponent<Image>().fillAmount = chargeTime / 2;
+        chargeBar.GetComponent<Image>().fillAmount = chargeTime * 5;
 
         if (!isReloading)
         {
@@ -65,6 +65,7 @@ public class Player : MonoBehaviour
                 chargeParticle_.Play();
                 isCharging = true;
                 asCharge.Play();
+                Time.timeScale = 0.1f;
             }
             else if (isCharging && chargeTime < maxChargeTime)
             {
@@ -80,6 +81,7 @@ public class Player : MonoBehaviour
                 chargeTime = 0f;
                 asCharge.Stop();
                 asChargeEnd.Play();
+                Time.timeScale = 1f;
             }
 
             if (currentBullets <= 0 && !isReloading)
@@ -119,7 +121,7 @@ public class Player : MonoBehaviour
         fireParticle.Play();//¿ª»ðÑÌ³¾
         fireShake = true;//¿ª»ðÕð¶¯
 
-        float speed = Mathf.Lerp(minSpeed, maxSpeed, chargeTime / maxChargeTime);
+        float speed = Mathf.Lerp(minSpeed, maxSpeed, chargeTime * 10 / maxChargeTime);
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0;
         Vector2 shootingDirection = (mousePos - transform.position).normalized;
